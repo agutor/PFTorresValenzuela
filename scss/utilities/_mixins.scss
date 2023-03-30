@@ -1,0 +1,44 @@
+@mixin flex ($disp, $dir, $just, $align){
+    display: $disp;
+    flex-direction: $dir;
+    justify-content: $just;
+    align-items: $align;
+}
+@mixin flexSimple ($disp, $dir){
+    display: $disp;
+    flex-direction: $dir;
+}
+@mixin boxModel($padd, $marg){
+    padding: $padd;
+    margin: $marg;
+}
+@mixin gridTemp($col, $row, $auto:auto){
+    display: grid;
+    grid-template-columns: repeat($col, $auto);
+    grid-template-rows: repeat($row, auto);
+}
+@mixin sm(){
+    @media (min-width: 500px){
+        @content;
+    }
+}
+@mixin md(){
+    @media (min-width: 768px){
+        @content;
+    }
+}
+@mixin lg(){
+    @media (min-width: 992px){
+        @content;
+    }
+}
+@mixin xl(){
+    @media (min-width: 1200px){
+        @content;
+    }
+}
+@mixin xxl(){
+    @media (min-width: 1400px){
+        @content;
+    }
+}
