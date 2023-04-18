@@ -16,8 +16,13 @@ Los datos deben ser ingresados por el usuario por el cuadro de dialogo en pantal
 ## Updates
 
 -Ahora el usuario puede agregar el nivel de dificultad de una tarea
+
 -Límite de tareas ajustado
+
 -Mas functions agregadas y comentadas detallando su uso
+
 -Nombres de variables ajustados para un mejor entendimiento del codigo
+
 -Objetos, Class de objeto y Array implementado
+
 -Uso de .map() y .forEach() para mostrar información del array en la consola
