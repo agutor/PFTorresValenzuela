@@ -33,46 +33,33 @@ function validarLetras(letra) {
   }
   
 
-//valida que los caracteres ingresados son numeros
-function validarNumeros(num){
-    while (isNaN(num) || num <= 0) {
-        if (isNaN (num)){
-            num = parseInt(prompt("Debes ingresar un numero"));
-        } else (num >=0);{
-            num = parseInt(prompt("Debes ingresar un número válido"));
-        }
+//valida que los caracteres ingresados son numeros y que esten en el rango solicitado
+function validarNumeros(num, a, b){
+    while (isNaN(num) || num < a || num > b ) {
+        num = parseInt(prompt("El número ingresado no es válido. Ingresa un número del " + a + " al " + b))
     }
     return num;
-}
-
-//solicita un numero y valida que este en el rango señalado
-function pedirNum(a, b) {
-    let numeroIngresado = parseInt(prompt("Del " + a + " al " + b + ", ¿qué nivel de dificultad le das a esta tarea?"));
-    while (numeroIngresado < a || numeroIngresado > b || isNaN(numeroIngresado)) {
-        numeroIngresado = parseInt(prompt("El número ingresado no es válido. Ingresa un número del " + a + " al " + b));
-    }
-    return numeroIngresado;
 }
 
 // comienzo de la app
 let nombre = prompt("¡Hola! ¿Cuál es tu nombre?");
 nombre = validarLetras(nombre);
-let numTareas = parseInt(prompt("¡Hola " + nombre + "! ¿Cuántas tareas tienes que realizar el día de hoy?"))
-numTareas = validarNumeros(numTareas)
+let numTareas = parseInt(prompt("¡Hola " + nombre + "! ¿Cuántas tareas tienes que realizar el día de hoy? Limite de tareas: 15"))
+numTareas = validarNumeros(numTareas, 1, 15)
 
 //si el numero de tareas es menor o igual que tres indica que es un dia ligero o de lo contrario un dia atareado
 //el bucle while esta para que el primer prompt contenga el mensaje indicando si son muchas tareas o no 
 if (numTareas <= 3) {
     let tarea = prompt("¡Entonces hoy tenemos un día ligero! ¿Cuál es la tarea n.º" + numLista + "?");
-    let dificultad = pedirNum(1, 5)
-    dificultad = validarNumeros(dificultad)
+    let dificultad = parseInt(prompt("Del 1 al 5, ¿qué nivel de dificultad le das a esta tarea?"));
+    dificultad = validarNumeros(dificultad, 1, 5)
     const toDo = new toDoTarea(numLista, tarea, dificultad)
     tareas.push(toDo);
     while (numLista < numTareas) {
         numLista++;
         tarea = prompt("¿La tarea n.º" + numLista + "?");
-        let dificultad = pedirNum(1, 5)
-        dificultad = validarNumeros(dificultad)
+        let dificultad = parseInt(prompt("Del 1 al 5, ¿qué nivel de dificultad le das a esta tarea?"));
+        dificultad = validarNumeros(dificultad, 1, 5)
         const toDo = new toDoTarea(numLista, tarea, dificultad)
         tareas.push(toDo);
     }
@@ -80,15 +67,15 @@ if (numTareas <= 3) {
     alert("¡Acá están listadas todas las tareas! \n" + listadoDeTareas + "\n¡Que tengas un día muy productivo, " + nombre + "!" + "\n \n\n PD: Mas detalles en la consola.");
 } else {
     let tarea = prompt("¿Un día movido? ¡Entonces hay que empezar con energías! ¿Cuál es la tarea n.º" + numLista + "?");
-    let dificultad =  pedirNum(1, 5)
-    dificultad = validarNumeros(dificultad)
+    let dificultad =  parseInt(prompt("Del 1 al 5, ¿qué nivel de dificultad le das a esta tarea?"));
+    dificultad = validarNumeros(dificultad, 1, 5)
     const toDo = new toDoTarea(numLista, tarea, dificultad)
     tareas.push(toDo);
     while (numLista < numTareas) {
         numLista++;
         tarea = prompt("¿La tarea n.º" + numLista + "?");
-        let dificultad =  pedirNum(1, 5)
-        dificultad = validarNumeros(dificultad)
+        let dificultad =  parseInt(prompt("Del 1 al 5, ¿qué nivel de dificultad le das a esta tarea?"));
+        dificultad = validarNumeros(dificultad, 1, 5)
         const toDo = new toDoTarea(numLista, tarea, dificultad)
         tareas.push(toDo);
     }
