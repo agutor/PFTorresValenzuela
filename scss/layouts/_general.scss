@@ -24,6 +24,9 @@ ul{
     padding-left: 0px;
     margin-bottom: 0px;
 }
+li{
+    @include flex (flex, row, center, flex-end)
+}
 
 hr{
     color: $colorAcento;
@@ -35,9 +38,17 @@ a{
     color: $colorAcento;
     text-decoration: none;
 }
-h2{
-    margin-bottom: 0rem;
-}
 h1 {
     margin-top: 100px;
+}
+
+.completado{
+    text-decoration-line: line-through;
+    color: gray;
+}
+
+.form-check-input{
+    margin-left: 0.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
 }
