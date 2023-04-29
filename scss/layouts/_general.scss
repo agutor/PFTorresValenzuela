@@ -25,7 +25,11 @@ ul{
     margin-bottom: 0px;
 }
 li{
-    @include flex (flex, row, center, flex-end)
+    // @include flex (flex, row, center, flex-end)
+    display: block;
+    align-items: center;
+    line-height: 1.5em;
+    margin-bottom: 0.5rem;
 }
 
 hr{
@@ -51,4 +55,23 @@ h1 {
     margin-left: 0.5rem;
     width: 1.5rem;
     height: 1.5rem;
+    margin-top: 0;
+}
+
+.form-select{
+    width: 100px;
+    display: inline-block;
+}
+.form-control{
+    display: inline-block;
+    width: 15rem;
+}
+.fa-solid{
+    margin-left: 0.5rem;
+}
+.on{
+    display: inline;
+}
+.deleteAll{
+    display: none;
 }
