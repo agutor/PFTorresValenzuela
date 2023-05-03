@@ -1,0 +1,59 @@
+.completado{
+    text-decoration-line: line-through;
+    color: gray;
+}
+
+.form-check-input{
+    margin-left: 0.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-top: 0;
+    &:hover{
+        cursor: pointer;
+        box-shadow: inset;
+    }
+    &:checked{
+        background-color: $colorAcento;
+        border-color: $colorAcento;
+    }
+}
+
+.btn-primary{
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #b9b262;
+    --bs-btn-border-color: #b9b262;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #a7a05c;
+    --bs-btn-hover-border-color: #a7a05c;
+    @include sm (){
+        margin-top: 10px;
+    }
+}
+.form-select{
+    width: 100px;
+    display: inline-block;
+}
+.form-control{
+    display: inline-block;
+    width: 15rem;
+}
+.fa-solid{
+    margin-left: 0.5rem;
+    &:hover{
+        cursor: pointer;
+    }
+    color: $colorSecundario;
+}
+.on{
+    display: block;
+}
+.deleteAll{
+    display: none;
+}
+
+.tarjeta{
+    box-shadow: 0 0 3rem -1rem rgba(0, 0, 0, .25);
+    margin: 10px;
+    padding: 10px 5px 30px 5px;
+    border-radius: 12px;
+}

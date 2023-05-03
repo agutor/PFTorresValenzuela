@@ -18,7 +18,7 @@
     grid-template-rows: repeat($row, auto);
 }
 @mixin sm(){
-    @media (min-width: 500px){
+    @media (max-width: 450px){
         @content;
     }
 }

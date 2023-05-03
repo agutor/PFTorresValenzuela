@@ -1,4 +1,4 @@
-# PreEntrega 2 Agustin Matias Torres Valenzuela
+# PreEntrega 3 Agustin Matias Torres Valenzuela
 Curso de Javascript comision 39505
 
 ## Lista de tareas diarias (to-do list)
@@ -7,24 +7,8 @@ Aplicación para organizar tareas diarias.
 
 Este simulador le permite al usuario:
 
-Ingresar su nombre,  un numero de tareas e indicar la dificultad de las mismas.
+Ingresar tareas y su dificultad
 
-Los datos deben ser ingresados por el usuario por el cuadro de dialogo en pantalla y la información procesada será devuelta al usuario por el mismo medio. 
-
-Ver mas detalles en la consola
+Marcarlas como completadas, borrar las mismas de manera individual o de manera grupal al terminarlas.
 
 
-
-## Updates
-
--Ahora el usuario puede agregar el nivel de dificultad de una tarea
-
--Límite de tareas ajustado
-
--Mas functions agregadas y comentadas detallando su uso
-
--Nombres de variables ajustados para un mejor entendimiento del codigo
-
--Objetos, Class de objeto y Array implementado
-
--Uso de .map() y .forEach() para mostrar información del array en la consola

@@ -10,23 +10,25 @@
 </head>
 <body>
     <main>
-        <h1>¡Ingresa tareas para comenzar tu lista!</h1>
-        <h2>No te olvides de seleccionar la dificultad</h2>
-        <form action="#" id="agregar-form" class="form">
-            <input type="text" class="form-control" id="input-tarea" placeholder="Ingrese una tarea" required>
-                <select class="form-select" id="select-dificultad">
-                    <option value="Fácil"> Fácil </option>
-                    <option selected value="Normal"> Normal </option>
-                    <option value="Difícil"> Difícil </option>
-                </select>
-            <input type="submit" id="agregar-submit" class="form-submit" value="Agregar">
-        </form>
-        <h3>Lista de Tareas</h3>
-        <ul id="lista-tareas"></ul>
-        <br><br><br>
-        <h3>Tareas Completadas</h3>
-        <ul id="tareas-completas"></ul>
-        <ul class="deleteAll" id="deleteAll"><i class="fa-sharp fa-solid fa-trash fa-2xl"></i></ul>
+        <div class="tarjeta">
+            <h1>¡Ingresa tareas para comenzar tu lista!</h1>
+            <h2>No te olvides de seleccionar la dificultad</h2>
+            <form action="#" id="agregar-form" class="form">
+                <input type="text" class="form-control" id="input-tarea" placeholder="Ingrese una tarea" required>
+                    <select class="form-select" id="select-dificultad">
+                        <option value="Fácil"> Fácil </option>
+                        <option selected value="Normal"> Normal </option>
+                        <option value="Difícil"> Difícil </option>
+                    </select>
+                <input type="submit" id="agregar-submit" class="btn btn-primary form-submit" value="Agregar">
+            </form>
+            <h3>Lista de Tareas</h3>
+            <ul id="lista-tareas"></ul>
+            <br><br><br>
+            <h3>Tareas Completadas</h3>
+            <ul id="tareas-completas"></ul>
+            <ul class="deleteAll" id="deleteAll"><i class="fa-sharp fa-solid fa-trash fa-2xl"></i></ul>
+        </div>
     </main>
     <script src="../js/main.js"></script>
     <script src="https://kit.fontawesome.com/747a27ed65.js" crossorigin="anonymous"></script>

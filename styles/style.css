@@ -6,14 +6,11 @@
 body {
   font-family: "Roboto Condensed", sans-serif;
   color: black;
-  text-align: center;
   display: flex;
   flex-direction: column;
+  text-align: center;
   min-height: 100vh;
-  background-image: url(../img/background.webp);
-  background-color: white;
-  background-attachment: fixed;
-  background-size: contain;
+  background-color: #F4ED9E;
 }
 
 img {
@@ -34,15 +31,15 @@ li {
 }
 
 hr {
-  color: #F4ED9E;
+  color: #b9b262;
 }
 
 .acento {
-  color: #F4ED9E;
+  color: #b9b262;
 }
 
 a {
-  color: #F4ED9E;
+  color: #b9b262;
   text-decoration: none;
 }
 
@@ -61,6 +58,28 @@ h1 {
   height: 1.5rem;
   margin-top: 0;
 }
+.form-check-input:hover {
+  cursor: pointer;
+  box-shadow: inset;
+}
+.form-check-input:checked {
+  background-color: #b9b262;
+  border-color: #b9b262;
+}
+
+.btn-primary {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #b9b262;
+  --bs-btn-border-color: #b9b262;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #a7a05c;
+  --bs-btn-hover-border-color: #a7a05c;
+}
+@media (max-width: 450px) {
+  .btn-primary {
+    margin-top: 10px;
+  }
+}
 
 .form-select {
   width: 100px;
@@ -74,14 +93,25 @@ h1 {
 
 .fa-solid {
   margin-left: 0.5rem;
+  color: #3FB950;
+}
+.fa-solid:hover {
+  cursor: pointer;
 }
 
 .on {
-  display: inline;
+  display: block;
 }
 
 .deleteAll {
   display: none;
+}
+
+.tarjeta {
+  box-shadow: 0 0 3rem -1rem rgba(0, 0, 0, 0.25);
+  margin: 10px;
+  padding: 10px 5px 30px 5px;
+  border-radius: 12px;
 }
 
 /*# sourceMappingURL=style.css.map */
