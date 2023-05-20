@@ -10,7 +10,7 @@ const btnComprarPoke = document.querySelector(".comprarPoke");
 let listaDeTareas = [];
 let listaDeTareasCompletas = [];
 
-export let puntos = 0;
+let puntos = 0;
 let contador = document.createElement("h1");
 function actualizaContador() {
   contador.innerText = "Puntos Disponibles: " + puntos;
@@ -52,19 +52,18 @@ function check() {
     localStorage.getItem("listaDeTareasCompletas")
   );
   const getPuntos = JSON.parse(localStorage.getItem("puntos"));
-  if (
-    getListaDeTareas != null ||
-    getListaDeTareasCompletas != null ||
-    getPuntos != null
-  ) {
+  if (getListaDeTareas != null || getListaDeTareasCompletas != null) {
     listaDeTareas = getListaDeTareas;
     listaDeTareasCompletas = getListaDeTareasCompletas;
-    puntos = getPuntos;
     recargaDOM();
-    actualizaContador();
   } else {
     listaDeTareas = [];
     listaDeTareasCompletas = [];
+  }
+  if (getPuntos != null) {
+    puntos = getPuntos;
+    actualizaContador();
+  } else {
     puntos = 0;
   }
 }
