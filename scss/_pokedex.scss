@@ -1,0 +1,70 @@
+.kanto-pokedex {
+    background-color: $colorPrincipal;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 80vh;
+    overflow: scroll;
+    padding: 20px;
+
+    @include sm() {
+        grid-template-columns: 1fr 1fr 1fr
+    }
+
+    @include md() {
+        grid-template-columns: 1fr 1fr 1fr 1fr
+    }
+
+    @include lg() {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr
+    }
+
+    @include xl() {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr
+    }
+
+    @include xxl() {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr
+    }
+
+
+    img {
+        width: 9rem;
+        height: 9rem;
+        margin: 0.5rem;
+        background-color: $colorAcento;
+        border-radius: 50%;
+        image-rendering: pixelated;
+    }
+}
+
+.ball-1,
+.ball-2,
+.ball-3 {
+    width: 3rem;
+}
+
+.locked {
+    filter: grayscale(80%)
+}
+
+.ball {
+    margin-top: 0.2rem;
+}
+
+.use-ball,
+.poke-0 {
+    display: none;
+}
+
+.nombre-contenedor {
+    display: inline-flex;
+}
+
+
+.pokemon {
+    margin-bottom: 1rem;
+}
+
+.pokemon-nombre {
+    text-decoration: underline;
+}

@@ -44,7 +44,13 @@ a {
 }
 
 h1 {
-  margin-top: 100px;
+  text-align: center;
+}
+
+.swal2-title,
+h4 {
+  text-transform: capitalize !important;
+  margin-left: 0.2rem;
 }
 
 .completado {
@@ -75,7 +81,7 @@ h1 {
   --bs-btn-hover-bg: #a7a05c;
   --bs-btn-hover-border-color: #a7a05c;
 }
-@media (max-width: 450px) {
+@media (min-width: 450px) {
   .btn-primary {
     margin-top: 10px;
   }
@@ -112,6 +118,79 @@ h1 {
   margin: 10px;
   padding: 10px 5px 30px 5px;
   border-radius: 12px;
+}
+
+.kanto-pokedex {
+  background-color: #F4ED9E;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 80vh;
+  overflow: scroll;
+  padding: 20px;
+}
+@media (min-width: 450px) {
+  .kanto-pokedex {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+@media (min-width: 768px) {
+  .kanto-pokedex {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+@media (min-width: 992px) {
+  .kanto-pokedex {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+@media (min-width: 1200px) {
+  .kanto-pokedex {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+@media (min-width: 1400px) {
+  .kanto-pokedex {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+.kanto-pokedex img {
+  width: 9rem;
+  height: 9rem;
+  margin: 0.5rem;
+  background-color: #b9b262;
+  border-radius: 50%;
+  image-rendering: pixelated;
+}
+
+.ball-1,
+.ball-2,
+.ball-3 {
+  width: 3rem;
+}
+
+.locked {
+  filter: grayscale(80%);
+}
+
+.ball {
+  margin-top: 0.2rem;
+}
+
+.use-ball,
+.poke-0 {
+  display: none;
+}
+
+.nombre-contenedor {
+  display: inline-flex;
+}
+
+.pokemon {
+  margin-bottom: 1rem;
+}
+
+.pokemon-nombre {
+  text-decoration: underline;
 }
 
 /*# sourceMappingURL=style.css.map */
