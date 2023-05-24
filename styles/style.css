@@ -164,8 +164,61 @@ h4 {
 
 .ball-1,
 .ball-2,
-.ball-3 {
+.ball-3,
+.ball-4,
+.ball-5,
+.ball-6,
+.ball-7,
+.ball-8,
+.ball-9,
+.ball-10,
+.ball-11,
+.ball-12,
+.ball-13,
+.ball-14,
+.ball-15,
+.ball-btn {
   width: 3rem;
+}
+
+.buttonBall {
+  height: 1.7rem;
+  width: 1.7rem;
+}
+
+.ballsBotones {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.ballsBotones .btn-primary {
+  margin-top: 0 !important;
+}
+
+.rarezaDom {
+  width: 3rem !important;
+  height: 3rem !important;
+  image-rendering: unset !important;
+  background-color: #3FB950 !important;
+}
+
+.rarezaSwal {
+  width: 3rem !important;
+  height: 3rem !important;
+  background-color: #3FB950;
+  border-radius: 50%;
+  image-rendering: unset !important;
+}
+
+.swal2-styled.swal2-confirm {
+  background-color: #3FB950 !important;
+}
+
+.swal2-popup {
+  background: #F4ED9E !important;
+  border: 13px !important;
+  border-color: #b9b262 !important;
 }
 
 .locked {
@@ -173,24 +226,39 @@ h4 {
 }
 
 .ball {
-  margin-top: 0.2rem;
+  display: block;
 }
 
-.use-ball,
-.poke-0 {
+.use-pokeball,
+.use-honorball,
+.use-superball,
+.use-ultraball,
+.use-masterball,
+.buy-pokeball,
+.buy-honorball,
+.buy-superball,
+.buy-ultraball,
+.buy-masterball,
+.use-pokerandom,
+.poke-0,
+.off {
   display: none;
 }
 
 .nombre-contenedor {
-  display: inline-flex;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
-.pokemon {
+.pokemon,
+.balled {
   margin-bottom: 1rem;
 }
 
 .pokemon-nombre {
-  text-decoration: underline;
+  text-decoration: underline #3FB950;
 }
 
 /*# sourceMappingURL=style.css.map */

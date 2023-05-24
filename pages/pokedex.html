@@ -16,15 +16,60 @@
     <header>
         <div class="contadorPuntos"></div>
         <button class="btn btn-primary unlock-poke">Obtener Pokemon</button>
-        <div class="ball">
-            <img class="ball-1 locked" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg"
-                alt="pokeball">
-            <img class="ball-2 locked" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg"
-                alt="pokeball">
-            <img class="ball-3 locked" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg"
-                alt="pokeball">
+        <button class="btn btn-primary showPoke">Pokemon Obtenidos</button>
+
+        <div>
+            <div class="ballsBotones">
+                <img class="ball-1 locked" src="../img/1-pokeBall.png" alt="pokeball">
+                <img class="ball-2 locked" src="../img/1-pokeBall.png" alt="pokeball">
+                <img class="ball-3 locked" src="../img/1-pokeBall.png" alt="pokeball">
+                <button class="btn btn-primary use-pokeball">Utilizar PokeBall <img class="ball-btn buttonBall"
+                        src="../img/1-pokeBall.png" alt="pokeball"></button>
+                <button class="btn btn-primary buy-honorball">Comprar HonorBall <img class="ball-btn buttonBall"
+                        src="../img/2-honorBall.png" alt="HonorBall"></button>
+            </div>
+
+            <div class="ballsBotones">
+                <img class="ball-4 locked" src="../img/2-honorBall.png" alt="HonorBall">
+                <img class="ball-5 locked" src="../img/2-honorBall.png" alt="HonorBall">
+                <img class="ball-6 locked" src="../img/2-honorBall.png" alt="HonorBall">
+                <button class="btn btn-primary use-honorball">Utilizar HonorBall <img class="ball-btn buttonBall"
+                        src="../img/2-honorBall.png" alt="HonorBall"></button>
+                <button class="btn btn-primary buy-superball">Comprar SuperBall <img class="ball-btn buttonBall"
+                        src="../img/3-superBall.png" alt="superball"></button>
+            </div>
+
+            <div class="ballsBotones">
+                <img class="ball-7 locked" src="../img/3-superBall.png" alt="superball">
+                <img class="ball-8 locked" src="../img/3-superBall.png" alt="superball">
+                <img class="ball-9 locked" src="../img/3-superBall.png" alt="superball">
+                <button class="btn btn-primary use-superball">Utilizar SuperBall <img class="ball-btn buttonBall"
+                        src="../img/3-superBall.png" alt="superball"></button>
+                <button class="btn btn-primary buy-ultraball">Comprar UltraBall <img class="ball-btn buttonBall"
+                        src="../img/4-ultraBall.png" alt="ultraBall"></button>
+            </div>
+
+            <div class="ballsBotones">
+                <img class="ball-10 locked" src="../img/4-ultraBall.png" alt="ultraBall">
+                <img class="ball-11 locked" src="../img/4-ultraBall.png" alt="ultraBall">
+                <img class="ball-12 locked" src="../img/4-ultraBall.png" alt="ultraBall">
+                <button class="btn btn-primary use-ultraball">Utilizar UltraBall <img class="ball-btn buttonBall"
+                        src="../img/4-ultraBall.png" alt="ultraBall"></button>
+                <button class="btn btn-primary buy-masterball">Comprar MasterBall <img class="ball-btn buttonBall"
+                        src="../img/5-masterBall.png" alt="masterball"></button>
+            </div>
+
+            <div class="ballsBotones">
+                <img class="ball-13 locked" src="../img/5-masterBall.png" alt="masterball">
+                <img class="ball-14 locked" src="../img/5-masterBall.png" alt="masterball">
+                <img class="ball-15 locked" src="../img/5-masterBall.png" alt="masterball">
+                <button class="btn btn-primary use-masterball">Utilizar MasterBall <img class="ball-btn buttonBall"
+                        src="../img/5-masterBall.png" alt="masterball"></button>
+                <button class="btn btn-primary use-pokerandom">Seleccionar un Pokemon <img class="ball-btn buttonBall"
+                        src="../img/6-pokeRandom.png" alt="pokemon"></button>
+            </div>
+
         </div>
-        <button class="btn btn-primary use-ball">Utilizar PokeBall</button>
     </header>
     <main>
 
@@ -34,6 +79,7 @@
     </main>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/pokedex.js" type="module"></script>
+    <script src="../js/ballPoints.js" type="module"></script>
 </body>
 
 </html>
