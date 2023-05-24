@@ -15,6 +15,7 @@ const kantoPokedex = document.querySelector(".kanto-pokedex");
 const unlockPoke = document.querySelector(".unlock-poke");
 const contadorPuntos = document.querySelector(".contadorPuntos");
 const showPoke = document.querySelector(".showPoke");
+const hidePoke = document.querySelector(".hidePoke");
 
 let URL = "https://pokeapi.co/api/v2/pokemon/";
 export let pokedexArray = [];
@@ -364,15 +365,15 @@ function newPoke(poke) {
   div.classList.add("obtenido");
 
   if (pokeHonor.includes(poke.id)) {
-    divHTML(div, poke, pokeId, "2-honorBall");
+    divHTML(div, poke, pokeId, "2-honorBall", "honor");
   } else if (pokeSuper.includes(poke.id)) {
-    divHTML(div, poke, pokeId, "3-superBall");
+    divHTML(div, poke, pokeId, "3-superBall", "super");
   } else if (pokeUltra.includes(poke.id)) {
-    divHTML(div, poke, pokeId, "4-ultraBall");
+    divHTML(div, poke, pokeId, "4-ultraBall", "ultra");
   } else if (pokeMaster.includes(poke.id)) {
-    divHTML(div, poke, pokeId, "5-masterBall");
+    divHTML(div, poke, pokeId, "5-masterBall", "master");
   } else {
-    divHTML(div, poke, pokeId, "1-pokeBall");
+    divHTML(div, poke, pokeId, "1-pokeBall", "normal");
   }
 
   let siguientePoke = document.querySelector(`.poke-${poke.id + 1}`);
@@ -383,13 +384,13 @@ function newPoke(poke) {
     anteriorPoke.after(div);
   }
 
-  function divHTML(div, poke, pokeId, rareza) {
+  function divHTML(div, poke, pokeId, pokeball, rareza) {
     div.innerHTML = `
             <img src="${poke.sprites.front_default}" alt="${poke.name}">
-            <div class="nombre-contenedor">
+            <div class="nombre-contenedor ${rareza}">
             <p class="pokemon-id">#${pokeId}</p>
             <h4 class="pokemon-nombre">${poke.name}</h4>
-            <img class="rarezaDom" src="../img/${rareza}.png" alt="${rareza}">
+            <img class="rarezaDom" src="../img/${pokeball}.png" alt="${pokeball}">
             </div>
     `;
   }
@@ -423,15 +424,22 @@ kantoPokedex.innerHTML = kantonians;
 
 document.addEventListener("DOMContentLoaded", function () {
   let obtenidos = localStorage.getItem("off");
-  const balled = document.querySelector(".balled");
-
+  const balled = document.querySelectorAll(".balled");
   function mostrarObtenidos() {
-    balled.classList.add("off");
+    balled.forEach(function (e) {
+      e.classList.add("off");
+    });
+    hidePoke.classList.remove("off");
+    showPoke.classList.add("off");
     localStorage.setItem("off", "activado");
   }
 
   function ocultarObtenidos() {
-    balled.classList.remove("off");
+    balled.forEach(function (e) {
+      e.classList.remove("off");
+    });
+    hidePoke.classList.add("off");
+    showPoke.classList.remove("off");
     localStorage.setItem("off", "desactivado");
   }
 
@@ -440,15 +448,14 @@ document.addEventListener("DOMContentLoaded", function () {
   } else {
     ocultarObtenidos();
   }
-
   showPoke.addEventListener("click", () => {
     obtenidos = localStorage.getItem("off");
+    mostrarObtenidos();
+  });
 
-    if (obtenidos === "activado") {
-      ocultarObtenidos();
-    } else {
-      mostrarObtenidos();
-    }
+  hidePoke.addEventListener("click", () => {
+    obtenidos = localStorage.getItem("off");
+    ocultarObtenidos();
   });
 });
 unlockPoke.addEventListener("click", comprarBall);
