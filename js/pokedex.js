@@ -425,12 +425,12 @@ kantoPokedex.innerHTML = kantonians;
 const balled = document.querySelector(".balled");
 
 function mostrarObtenidos() {
-  balled.classList.add("off");
+  balled.classList.add(".off");
   localStorage.setItem("off", "activado");
 }
 
 function ocultarObtenidos() {
-  balled.classList.remove("off");
+  balled.classList.remove(".off");
   localStorage.setItem("off", "desactivado");
 }
 
