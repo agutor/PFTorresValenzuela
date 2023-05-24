@@ -64,7 +64,6 @@ class pokemon {
 //   }
 
 let puntos = 0;
-let obtenidos = localStorage.getItem("off");
 
 function checkPokedex() {
   const getPuntos = JSON.parse(localStorage.getItem("puntos"));
@@ -422,34 +421,37 @@ for (let i = 0; i <= 151; i++) {
 }
 kantoPokedex.innerHTML = kantonians;
 
-const balled = document.querySelector(".balled");
+document.addEventListener("DOMContentLoaded", function () {
+  let obtenidos = localStorage.getItem("off");
+  const balled = document.querySelector(".balled");
 
-function mostrarObtenidos() {
-  balled.classList.add(".off");
-  localStorage.setItem("off", "activado");
-}
+  function mostrarObtenidos() {
+    balled.classList.add("off");
+    localStorage.setItem("off", "activado");
+  }
 
-function ocultarObtenidos() {
-  balled.classList.remove(".off");
-  localStorage.setItem("off", "desactivado");
-}
-
-if (obtenidos === "activado") {
-  mostrarObtenidos();
-} else {
-  ocultarObtenidos();
-}
-unlockPoke.addEventListener("click", comprarBall);
-showPoke.addEventListener("click", () => {
-  obtenidos = localStorage.getItem("off");
+  function ocultarObtenidos() {
+    balled.classList.remove("off");
+    localStorage.setItem("off", "desactivado");
+  }
 
   if (obtenidos === "activado") {
-    ocultarObtenidos();
-  } else {
     mostrarObtenidos();
+  } else {
+    ocultarObtenidos();
   }
-});
 
+  showPoke.addEventListener("click", () => {
+    obtenidos = localStorage.getItem("off");
+
+    if (obtenidos === "activado") {
+      ocultarObtenidos();
+    } else {
+      mostrarObtenidos();
+    }
+  });
+});
+unlockPoke.addEventListener("click", comprarBall);
 checkPokedex();
 actualizaContador();
 
