@@ -9,6 +9,11 @@ import {
   superBallPoints,
   ultraBallPoints,
   masterBallPoints,
+  swalDuplicadoPokeball,
+  swalDuplicadoHonorball,
+  swalDuplicadoSuperball,
+  swalDuplicadoUltraball,
+  swalDuplicadoMasterball,
 } from "./ballPoints.js";
 
 const kantoPokedex = document.querySelector(".kanto-pokedex");
@@ -20,6 +25,7 @@ const hidePoke = document.querySelector(".hidePoke");
 let URL = "https://pokeapi.co/api/v2/pokemon/";
 export let pokedexArray = [];
 let pokemonObtenidos = [];
+let shinyObtenidoDom = [];
 let cantidadDeCompras = 0;
 export const pokeNormales = [
   10, 11, 13, 14, 16, 17, 19, 21, 23, 25, 27, 29, 32, 35, 37, 39, 41, 43, 46,
@@ -43,6 +49,7 @@ export let honorObtenido = [];
 export let superObtenido = [];
 export let ultraObtenido = [];
 export let masterObtenido = [];
+export let shinyObtenido = [];
 
 class pokemon {
   constructor(imagen, id, nombre) {
@@ -51,18 +58,6 @@ class pokemon {
     this.nombre = nombre;
   }
 }
-// function comprarBola(puntos, actualizar) {
-//     if (puntos >= 5) {
-//       puntos -= 5;
-//       actualizar;
-//       let randomPoke = Math.floor(Math.random() * 151) + 1;
-//       pokeGatcha(randomPoke);
-//       alert("¡Has comprado una bola! Tu pokemon es el Numero: " + randomPoke);
-//       console.log(pokedex);
-//     } else {
-//       alert("No tienes suficientes puntos para comprar una bola");
-//     }
-//   }
 
 let puntos = 0;
 
@@ -79,6 +74,9 @@ function checkPokedex() {
   const getCantidadDeCompras = JSON.parse(
     localStorage.getItem("cantidadDeCompras")
   );
+  const getShinyObtenidoDom = JSON.parse(
+    localStorage.getItem("shinyObtenidoDom")
+  );
 
   if (getPuntos != null) {
     puntos = getPuntos;
@@ -89,7 +87,6 @@ function checkPokedex() {
     getPokemonObtenidos.sort(function (a, b) {
       return a - b;
     });
-    console.log(getPokemonObtenidos);
     pokemonObtenidos = getPokemonObtenidos;
     pokemonObtenidosDOM();
   } else {
@@ -123,15 +120,34 @@ function checkPokedex() {
   }
   if (getCantidadDeCompras != null) {
     cantidadDeCompras = getCantidadDeCompras;
+  } else {
+    cantidadDeCompras = 0;
+  }
+  if (getShinyObtenidoDom != null) {
+    shinyObtenidoDom = getShinyObtenidoDom;
+    console.log(shinyObtenidoDom);
+    cargaShinysDOM();
+  } else {
+    shinyObtenidoDom = [];
   }
 }
 
 function pokemonObtenidosDOM() {
-  //setTimeout(() => {
+  Swal.fire({
+    title: "Cargando Pokedex!",
+    html: "Aguarda un momento por favor",
+    timer: 2000,
+    timerProgressBar: true,
+    didOpen: () => {
+      Swal.showLoading();
+    },
+    willClose: () => {
+      clearInterval();
+    },
+  });
   const requests = [];
   pokemonObtenidos.forEach((poke) => {
     const limpiarPoke = document.querySelector(`.poke-${poke}`);
-    console.log(limpiarPoke);
     limpiarPoke.remove();
 
     requests.push(fetch(URL + poke).then((response) => response.json()));
@@ -139,9 +155,22 @@ function pokemonObtenidosDOM() {
   Promise.all(requests).then((data) => {
     data.forEach((pokemon) => newPoke(pokemon));
   });
-  //}, 1500); // Espera 1 segundo por cada iteración antes de ejecutar el código
 }
 
+function cargaShinysDOM() {
+  const shinyRequest = [];
+  if (shinyObtenidoDom) {
+    shinyObtenidoDom.forEach((shiny) => {
+      const shinyDom = document.querySelector(`.poke-${shiny}`);
+      console.log(shinyDom);
+      shinyDom.remove();
+      shinyRequest.push(fetch(URL + shiny).then((response) => response.json()));
+    });
+    Promise.all(shinyRequest).then((data) => {
+      data.forEach((shinyPokemon) => newShiny(shinyPokemon));
+    });
+  }
+}
 function guardarPokedexEnLS() {
   localStorage.setItem("puntos", JSON.stringify(puntos));
   localStorage.setItem("pokemonObtenidos", JSON.stringify(pokemonObtenidos));
@@ -151,6 +180,7 @@ function guardarPokedexEnLS() {
   localStorage.setItem("ultraObtenido", JSON.stringify(ultraObtenido));
   localStorage.setItem("masterObtenido", JSON.stringify(masterObtenido));
   localStorage.setItem("cantidadDeCompras", JSON.stringify(cantidadDeCompras));
+  localStorage.setItem("shinyObtenidoDom", JSON.stringify(shinyObtenidoDom));
   actualizaContador();
 }
 
@@ -161,7 +191,6 @@ function actualizaContador() {
 }
 
 function comprarBall() {
-  console.log(puntos);
   cantidadDeCompras++;
   guardarPokedexEnLS();
   if (
@@ -173,18 +202,12 @@ function comprarBall() {
   ) {
     Swal.fire("Debes usar las Balls antes de continuar!");
   } else if (cantidadDeCompras === 10 || cantidadDeCompras === 20) {
-    console.log("PITY SYSTEM INCOMING");
     let i = Math.floor(Math.random() * pokedexArray.length);
     if (pokeUltra.includes(i) || pokeMaster.includes(i)) {
-      console.log("Posible Pokemon Super Super Raro");
       let i = Math.floor(Math.random() * pokedexArray.length);
-      console.log("Salió: " + i);
       if (pokeMaster.includes(i)) {
-        console.log("Posible Pokemon Ultra Raro");
         i = Math.floor(Math.random() * pokedexArray.length);
-        console.log("Salió: " + i);
         while (i === 0) {
-          console.log("PONGALE CERO");
           i = Math.floor(Math.random() * pokedexArray.length);
         }
         selectPoke(i);
@@ -195,10 +218,8 @@ function comprarBall() {
       selectPoke(i);
     }
   } else if (cantidadDeCompras === 30) {
-    console.log("TIRADA LEGENDARIA");
     let i = Math.floor(Math.random() * pokedexArray.length);
     while (i === 0 || pokeNormales.includes(i) || pokeHonor.includes(i)) {
-      console.log("LEGENDARIAAAAAAAAA");
       i = Math.floor(Math.random() * pokedexArray.length);
     }
     selectPoke(i);
@@ -209,7 +230,6 @@ function comprarBall() {
       puntos -= 1;
       let i = Math.floor(Math.random() * pokedexArray.length);
       while (i === 0) {
-        console.log("SALIÓ CERO D:");
         i = Math.floor(Math.random() * pokedexArray.length);
       }
       if (
@@ -218,10 +238,8 @@ function comprarBall() {
         pokeUltra.includes(i) ||
         pokeMaster.includes(i)
       ) {
-        console.log("Posible Pokemon Raro");
         let i = Math.floor(Math.random() * pokedexArray.length);
         while (i === 0) {
-          console.log("SALIÓ CERO D:");
           i = Math.floor(Math.random() * pokedexArray.length);
         }
         if (
@@ -229,24 +247,18 @@ function comprarBall() {
           pokeUltra.includes(i) ||
           pokeMaster.includes(i)
         ) {
-          console.log("Posible Pokemon Super Raro");
           let i = Math.floor(Math.random() * pokedexArray.length);
           while (i === 0) {
-            console.log("SALIÓ CERO D:");
             i = Math.floor(Math.random() * pokedexArray.length);
           }
           if (pokeUltra.includes(i) || pokeMaster.includes(i)) {
-            console.log("Posible Pokemon Super Super Raro");
             let i = Math.floor(Math.random() * pokedexArray.length);
             while (i === 0) {
-              console.log("SALIÓ CERO D:");
               i = Math.floor(Math.random() * pokedexArray.length);
             }
             if (pokeMaster.includes(i)) {
-              console.log("Posible Pokemon Ultra Raro");
               i = Math.floor(Math.random() * pokedexArray.length);
               while (i === 0) {
-                console.log("SALIÓ CERO D:");
                 i = Math.floor(Math.random() * pokedexArray.length);
               }
               selectPoke(i);
@@ -263,39 +275,63 @@ function comprarBall() {
         selectPoke(i);
       }
     } else {
-      alert("No tienes suficientes puntos para comprar una bola");
+      Swal.fire("No tienes suficientes puntos para comprar una bola");
     }
   }
 }
 
+function borrarTareasCompletas() {
+  localStorage.removeItem("listaDeTareasCompletas");
+}
+
 export function selectPoke(i) {
-  if (pokemonObtenidos.includes(i)) {
-    if (pokeHonor.includes(i)) {
-      sumaHonorBallPoints(1);
-      guardarPokedexEnLS();
-      swalDuplicado(i, "2-honorBall");
-    } else if (pokeSuper.includes(i)) {
-      sumaSuperBallPoints(1);
-      guardarPokedexEnLS();
-      swalDuplicado(i, "3-superBall");
-    } else if (pokeUltra.includes(i)) {
-      sumaUltraBallPoints(1);
-      guardarPokedexEnLS();
-      swalDuplicado(i, "4-ultraBall");
-    } else if (pokeMaster.includes(i)) {
-      sumaMasterBallPoints(1);
-      guardarPokedexEnLS();
-      swalDuplicado(i, "5-masterBall");
+  borrarTareasCompletas();
+  Swal.fire({
+    title: "Buscando Pokemon!",
+    html: "Aguarda un momento por favor",
+    timer: 1000,
+    timerProgressBar: true,
+    didOpen: () => {
+      Swal.showLoading();
+    },
+    willClose: () => {
+      clearInterval();
+    },
+  }).then(() => {
+    if (pokemonObtenidos.includes(i)) {
+      let shiny = Math.floor(Math.random() * 100) + 1;
+      if (shiny === 81) {
+        console.log("shiny obtenidos array: " + shinyObtenidoDom);
+        limpiezaDOMArray(i);
+        guardarPokedexEnLS();
+      } else {
+        if (pokeHonor.includes(i)) {
+          sumaHonorBallPoints(1);
+          guardarPokedexEnLS();
+          swalDuplicado(i, "2-honorBall");
+        } else if (pokeSuper.includes(i)) {
+          sumaSuperBallPoints(1);
+          guardarPokedexEnLS();
+          swalDuplicado(i, "3-superBall");
+        } else if (pokeUltra.includes(i)) {
+          sumaUltraBallPoints(1);
+          guardarPokedexEnLS();
+          swalDuplicado(i, "4-ultraBall");
+        } else if (pokeMaster.includes(i)) {
+          sumaMasterBallPoints(1);
+          guardarPokedexEnLS();
+          swalDuplicado(i, "5-masterBall");
+        } else {
+          sumaPokeBallPoints(1);
+          guardarPokedexEnLS();
+          swalDuplicado(i, "1-pokeBall");
+        }
+      }
     } else {
-      sumaPokeBallPoints(1);
       guardarPokedexEnLS();
-      swalDuplicado(i, "1-pokeBall");
+      limpiezaDOMArray(i);
     }
-  } else {
-    pokemonObtenidos.push(i);
-    guardarPokedexEnLS();
-    limpiezaDOMArray(i);
-  }
+  });
 }
 
 function swalRareza(i, rareza) {
@@ -306,6 +342,19 @@ function swalRareza(i, rareza) {
       Swal.fire({
         title: `#${poke.id} ${poke.name}`,
         imageUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${i}.png`,
+        html: `<p>Rareza: </p><img src="../img/${rareza}.png" class="rarezaSwal"> `,
+      })
+    );
+}
+
+function swalShiny(i, rareza) {
+  guardarPokedexEnLS();
+  fetch(URL + i)
+    .then((response) => response.json())
+    .then((poke) =>
+      Swal.fire({
+        title: `Encontraste un ${poke.name} shiny`,
+        imageUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/${i}.png`,
         html: `<p>Rareza: </p><img src="../img/${rareza}.png" class="rarezaSwal"> `,
       })
     );
@@ -322,28 +371,90 @@ function swalDuplicado(i, rareza) {
         imageUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${i}.png`,
         html: `<p>#${poke.id} ${poke.name}</p><p>En su lugar obtienes: </p><img src="../img/${rareza}.png" class="rarezaSwal"> `,
       })
-    );
+    )
+    .then(() => {
+      if (
+        pokeBallPoints === 3 ||
+        honorBallPoints === 3 ||
+        superBallPoints === 3 ||
+        ultraBallPoints === 3 ||
+        masterBallPoints === 3
+      ) {
+        if (rareza === "1-pokeBall") {
+          swalDuplicadoPokeball();
+        } else if (rareza === "2-honorBall") {
+          swalDuplicadoHonorball();
+        } else if (rareza === "3-superBall") {
+          swalDuplicadoSuperball();
+        } else if (rareza === "4-ultraBall") {
+          swalDuplicadoUltraball();
+        } else if (rareza === "5-masterBall") {
+          swalDuplicadoMasterball();
+        }
+      }
+    });
 }
 
 function limpiezaDOMArray(i) {
-  if (pokeHonor.includes(i)) {
-    honorObtenido++;
-    swalRareza(i, "2-honorBall");
-  } else if (pokeSuper.includes(i)) {
-    superObtenido++;
-    swalRareza(i, "3-superBall");
-  } else if (pokeUltra.includes(i)) {
-    ultraObtenido++;
-    swalRareza(i, "4-ultraBall");
-  } else if (pokeMaster.includes(i)) {
-    masterObtenido++;
-    swalRareza(i, "5-masterBall");
+  if (pokemonObtenidos.includes(i)) {
+    shinyObtenido++;
+    shinyObtenidoDom.push(i);
+    const actPokemonObtenidos = pokemonObtenidos.indexOf(i);
+    if (actPokemonObtenidos !== -1) {
+      pokemonObtenidos.splice(actPokemonObtenidos, 1);
+    }
+    guardarPokedexEnLS();
+    if (pokeHonor.includes(i)) {
+      swalShiny(i, "8-shinyHonorBall");
+    } else if (pokeSuper.includes(i)) {
+      swalShiny(i, "9-shinySuperBall");
+    } else if (pokeUltra.includes(i)) {
+      swalShiny(i, "10-shinyUltraBall");
+    } else if (pokeMaster.includes(i)) {
+      swalShiny(i, "11-shinyMasterBall");
+    } else {
+      swalShiny(i, "7-shinyPokeBall");
+      console.log("shiny?" + i);
+    }
+    console.log("shiny bro");
+    const limpiarPoke = document.querySelector(`.poke-${i}`);
+    limpiarPoke.remove();
+
+    fetch(URL + i)
+      .then((response) => response.json())
+      .then((data) => newShiny(data));
   } else {
-    normalObtenido++;
-    swalRareza(i, "1-pokeBall");
+    if (pokeHonor.includes(i)) {
+      honorObtenido++;
+      pokemonObtenidos.push(i);
+      swalRareza(i, "2-honorBall");
+      limpiarPokes(i);
+    } else if (pokeSuper.includes(i)) {
+      superObtenido++;
+      pokemonObtenidos.push(i);
+      swalRareza(i, "3-superBall");
+      limpiarPokes(i);
+    } else if (pokeUltra.includes(i)) {
+      ultraObtenido++;
+      pokemonObtenidos.push(i);
+      swalRareza(i, "4-ultraBall");
+      limpiarPokes(i);
+    } else if (pokeMaster.includes(i)) {
+      masterObtenido++;
+      pokemonObtenidos.push(i);
+      swalRareza(i, "5-masterBall");
+      limpiarPokes(i);
+    } else {
+      normalObtenido++;
+      pokemonObtenidos.push(i);
+      swalRareza(i, "1-pokeBall");
+      limpiarPokes(i);
+    }
   }
+}
+
+function limpiarPokes(i) {
   const limpiarPoke = document.querySelector(`.poke-${i}`);
-  console.log(limpiarPoke);
   limpiarPoke.remove();
   fetch(URL + i)
     .then((response) => response.json())
@@ -351,7 +462,6 @@ function limpiezaDOMArray(i) {
 }
 
 function newPoke(poke) {
-  //FUNCION PARA ACTUALIZAR STORAGE ACAAAAA
   let pokeId = poke.id.toString();
   if (pokeId.length === 1) {
     pokeId = "00" + pokeId;
@@ -378,15 +488,54 @@ function newPoke(poke) {
 
   let siguientePoke = document.querySelector(`.poke-${poke.id + 1}`);
   let anteriorPoke = document.querySelector(`.poke-${poke.id - 1}`);
-  if (siguientePoke) {
-    siguientePoke.before(div);
-  } else {
-    anteriorPoke.after(div);
-  }
+
+  siguientePoke ? siguientePoke.before(div) : anteriorPoke.after(div);
 
   function divHTML(div, poke, pokeId, pokeball, rareza) {
     div.innerHTML = `
             <img src="${poke.sprites.front_default}" alt="${poke.name}">
+            <div class="nombre-contenedor ${rareza}">
+            <p class="pokemon-id">#${pokeId}</p>
+            <h4 class="pokemon-nombre">${poke.name}</h4>
+            <img class="rarezaDom" src="../img/${pokeball}.png" alt="${pokeball}">
+            </div>
+    `;
+  }
+}
+
+function newShiny(poke) {
+  let pokeId = poke.id.toString();
+  if (pokeId.length === 1) {
+    pokeId = "00" + pokeId;
+  } else if (pokeId.length === 2) {
+    pokeId = "0" + pokeId;
+  }
+
+  const div = document.createElement("div");
+  div.classList.add(`pokemon`);
+  div.classList.add(`poke-${poke.id}`);
+  div.classList.add("shiny");
+
+  if (pokeHonor.includes(poke.id)) {
+    divHTML(div, poke, pokeId, "8-shinyHonorBall", "honor");
+  } else if (pokeSuper.includes(poke.id)) {
+    divHTML(div, poke, pokeId, "9-shinySuperBall", "super");
+  } else if (pokeUltra.includes(poke.id)) {
+    divHTML(div, poke, pokeId, "10-shinyUltraBall", "ultra");
+  } else if (pokeMaster.includes(poke.id)) {
+    divHTML(div, poke, pokeId, "11-shinyMasterBall", "master");
+  } else {
+    divHTML(div, poke, pokeId, "7-shinyPokeBall", "normal");
+  }
+
+  let siguientePoke = document.querySelector(`.poke-${poke.id + 1}`);
+  let anteriorPoke = document.querySelector(`.poke-${poke.id - 1}`);
+
+  siguientePoke ? siguientePoke.before(div) : anteriorPoke.after(div);
+
+  function divHTML(div, poke, pokeId, pokeball, rareza) {
+    div.innerHTML = `
+            <img src="${poke.sprites.front_shiny}" alt="${poke.name}">
             <div class="nombre-contenedor ${rareza}">
             <p class="pokemon-id">#${pokeId}</p>
             <h4 class="pokemon-nombre">${poke.name}</h4>
@@ -425,12 +574,16 @@ kantoPokedex.innerHTML = kantonians;
 document.addEventListener("DOMContentLoaded", function () {
   let obtenidos = localStorage.getItem("off");
   const balled = document.querySelectorAll(".balled");
+  const filtro = document.querySelectorAll(".filtro");
   function mostrarObtenidos() {
     balled.forEach(function (e) {
       e.classList.add("off");
     });
-    hidePoke.classList.remove("off");
-    showPoke.classList.add("off");
+    filtro.forEach(function (e) {
+      e.classList.remove("off");
+    });
+    hidePoke.classList.remove("btnActivado");
+    showPoke.classList.add("btnActivado");
     localStorage.setItem("off", "activado");
   }
 
@@ -438,9 +591,64 @@ document.addEventListener("DOMContentLoaded", function () {
     balled.forEach(function (e) {
       e.classList.remove("off");
     });
-    hidePoke.classList.add("off");
-    showPoke.classList.remove("off");
+    hidePoke.classList.add("btnActivado");
+    showPoke.classList.remove("btnActivado");
+    filtro.forEach(function (e) {
+      e.classList.add("off");
+    });
     localStorage.setItem("off", "desactivado");
+  }
+  const filtroNormal = document.querySelector(".filtro-normal");
+  const filtroHonor = document.querySelector(".filtro-honor");
+  const filtroSuper = document.querySelector(".filtro-super");
+  const filtroUltra = document.querySelector(".filtro-ultra");
+  const filtroMaster = document.querySelector(".filtro-master");
+
+  filtroNormal.addEventListener("click", hideNormal);
+  filtroHonor.addEventListener("click", hideHonor);
+  filtroSuper.addEventListener("click", hideSuper);
+  filtroUltra.addEventListener("click", hideUltra);
+  filtroMaster.addEventListener("click", hideMaster);
+
+  function hideNormal() {
+    const normal = document.querySelectorAll(".normal");
+    normal.forEach(function (e) {
+      const pokeNormal = e.parentElement;
+      pokeNormal.classList.toggle("off");
+    });
+    filtroNormal.classList.toggle("filtroDesactivado");
+  }
+  function hideHonor() {
+    const honor = document.querySelectorAll(".honor");
+    honor.forEach(function (e) {
+      const pokeHonor = e.parentElement;
+      pokeHonor.classList.toggle("off");
+    });
+    filtroHonor.classList.toggle("filtroDesactivado");
+  }
+  function hideSuper() {
+    const superP = document.querySelectorAll(".super");
+    superP.forEach(function (e) {
+      const pokeSuper = e.parentElement;
+      pokeSuper.classList.toggle("off");
+    });
+    filtroSuper.classList.toggle("filtroDesactivado");
+  }
+  function hideUltra() {
+    const ultra = document.querySelectorAll(".ultra");
+    ultra.forEach(function (e) {
+      const pokeUltra = e.parentElement;
+      pokeUltra.classList.toggle("off");
+    });
+    filtroUltra.classList.toggle("filtroDesactivado");
+  }
+  function hideMaster() {
+    const master = document.querySelectorAll(".master");
+    master.forEach(function (e) {
+      const pokeMaster = e.parentElement;
+      pokeMaster.classList.toggle("off");
+    });
+    filtroMaster.classList.toggle("filtroDesactivado");
   }
 
   if (obtenidos === "activado") {
@@ -448,6 +656,7 @@ document.addEventListener("DOMContentLoaded", function () {
   } else {
     ocultarObtenidos();
   }
+  obtenidos === "activado" ? mostrarObtenidos() : ocultarObtenidos;
   showPoke.addEventListener("click", () => {
     obtenidos = localStorage.getItem("off");
     mostrarObtenidos();
@@ -461,6 +670,3 @@ document.addEventListener("DOMContentLoaded", function () {
 unlockPoke.addEventListener("click", comprarBall);
 checkPokedex();
 actualizaContador();
-
-//////////////cleanPokedex();
-//////////////getPokedex();

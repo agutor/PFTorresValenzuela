@@ -17,30 +17,9 @@ function actualizaContador() {
   contadorPuntos.append(contador);
 }
 
-function sumaPuntoFacil(n) {
+function sumaPunto(n) {
   puntos += n;
-  if (puntos <= 0) {
-    puntos = 0;
-  }
-  console.log(puntos);
-  actualizaContador();
-}
-
-function sumaPuntoNormal(n) {
-  puntos += n;
-  if (puntos <= 0) {
-    puntos = 0;
-  }
-  console.log(puntos);
-  actualizaContador();
-}
-
-function sumaPuntoDificil(n) {
-  puntos += n;
-  if (puntos <= 0) {
-    puntos = 0;
-  }
-  console.log(puntos);
+  puntos = puntos <= 0 ? 0 : puntos;
   actualizaContador();
 }
 
@@ -52,12 +31,16 @@ function check() {
     localStorage.getItem("listaDeTareasCompletas")
   );
   const getPuntos = JSON.parse(localStorage.getItem("puntos"));
-  if (getListaDeTareas != null || getListaDeTareasCompletas != null) {
+  if (getListaDeTareas != null) {
     listaDeTareas = getListaDeTareas;
-    listaDeTareasCompletas = getListaDeTareasCompletas;
     recargaDOM();
   } else {
     listaDeTareas = [];
+  }
+  if (getListaDeTareasCompletas != null) {
+    listaDeTareasCompletas = getListaDeTareasCompletas;
+    recargaDOM();
+  } else {
     listaDeTareasCompletas = [];
   }
   if (getPuntos != null) {
@@ -86,7 +69,6 @@ function guardarEnLS() {
     JSON.stringify(listaDeTareasCompletas)
   );
   localStorage.setItem("puntos", JSON.stringify(puntos));
-  console.log(listaDeTareas);
 }
 
 class tarea {
@@ -133,12 +115,8 @@ function checked(item, objetoTarea, noCheck = false) {
 
 //Funcion utilizada para determinar si el boton de borrado individual de cada tarea aparece en el html
 function addDeleteBtn(item, deleteBtn, agregar = true) {
-  if (agregar) {
-    item.append(deleteBtn);
-  } else {
-    item.append(deleteBtn);
-    deleteBtn.style.display = "none";
-  }
+  item.append(deleteBtn);
+  deleteBtn.style.display = !agregar ? "none" : deleteBtn.style.display;
 }
 
 // Crea un boton para borrar todas las tareas completadas
@@ -154,13 +132,9 @@ function deleteAll() {
   onOffDeleteBtn();
 }
 
-//Determina cuando aparece el botonde borrado de tareas completadas
+//Determina cuando aparece el boton de borrado de tareas completadas
 function onOffDeleteBtn() {
-  if (tareasCompletas.children.length > 0) {
-    xBtn.style.display = "initial";
-  } else {
-    xBtn.style.display = "none";
-  }
+  xBtn.style.display = tareasCompletas.children.length > 0 ? "initial" : "none";
 }
 
 // Crea un LI en el UL del html con la informacion de la tarea proporcionada por el usuario
@@ -176,15 +150,11 @@ function newItem(checkCheck, objetoTarea, visibilidad, listaStorage, btn) {
   checkbox.addEventListener("click", function () {
     if (checkbox.checked) {
       item.classList.add("completado");
-      if (item.classList.contains("Fácil")) {
-        sumaPuntoFacil(1);
-      }
-      if (item.classList.contains("Normal")) {
-        sumaPuntoNormal(2);
-      }
-      if (item.classList.contains("Difícil")) {
-        sumaPuntoDificil(3);
-      }
+
+      item.classList.contains("Fácil") ? sumaPunto(1) : undefined;
+      item.classList.contains("Normal") ? sumaPunto(2) : undefined;
+      item.classList.contains("Difícil") ? sumaPunto(3) : undefined;
+
       deleteBtn.style.display = "none";
       tareasCompletas.append(item);
       const tareaCompletada = listaDeTareas.splice(
@@ -195,15 +165,10 @@ function newItem(checkCheck, objetoTarea, visibilidad, listaStorage, btn) {
       guardarEnLS();
     } else {
       item.classList.remove("completado");
-      if (item.classList.contains("Fácil")) {
-        sumaPuntoFacil(-1);
-      }
-      if (item.classList.contains("Normal")) {
-        sumaPuntoNormal(-2);
-      }
-      if (item.classList.contains("Difícil")) {
-        sumaPuntoDificil(-3);
-      }
+      item.classList.contains("Fácil") ? sumaPunto(-1) : undefined;
+      item.classList.contains("Normal") ? sumaPunto(-2) : undefined;
+      item.classList.contains("Difícil") ? sumaPunto(-3) : undefined;
+
       deleteBtn.style.display = "inline";
       listaTareas.append(item);
       const tareaIncompleta = listaDeTareasCompletas.splice(

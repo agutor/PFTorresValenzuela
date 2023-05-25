@@ -69,11 +69,39 @@
     }
 }
 
+.filtro {
+    width: 3rem !important;
+    height: 3rem !important;
+    image-rendering: unset !important;
+    background-color: $colorAcento !important;
+    border-radius: 50%;
+    margin-top: 0.2rem;
+}
+
+.filtroDesactivado {
+    filter: grayscale(80%)
+}
+
+.btnActivado {
+    filter: contrast(65%);
+}
+
+p {
+    margin-top: 1rem;
+    margin-bottom: 0;
+    text-decoration: solid;
+}
+
+.aviso {
+    color: red;
+}
+
 .rarezaDom {
     width: 3rem !important;
     height: 3rem !important;
     image-rendering: unset !important;
     background-color: $colorSecundario !important;
+    border-radius: 50%;
 }
 
 .rarezaSwal {

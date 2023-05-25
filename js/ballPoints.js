@@ -49,9 +49,7 @@ let pokemonObtenidos = [];
 
 function guardarBallPoints() {
   localStorage.setItem("pokeBallPoints", JSON.stringify(pokeBallPoints));
-  console.log("poke ball points guardados. Total: " + pokeBallPoints);
   localStorage.setItem("honorBallPoints", JSON.stringify(honorBallPoints));
-  console.log("honor ball points guardados. Total: " + honorBallPoints);
   localStorage.setItem("superBallPoints", JSON.stringify(superBallPoints));
   localStorage.setItem("ultraBallPoints", JSON.stringify(ultraBallPoints));
   localStorage.setItem("masterBallPoints", JSON.stringify(masterBallPoints));
@@ -120,7 +118,6 @@ function selectorPitySistem(rareza) {
     i = Math.floor(Math.random() * pokedexArray.length);
   }
   selectPoke(i);
-  console.log("SE REPITE?");
 }
 
 function sumaPokeBallPoints(n) {
@@ -137,28 +134,31 @@ function sumaPokeBallPoints(n) {
     ball3.classList.remove("locked");
     usePokeball.style.display = "inline";
     buyHonorball.style.display = "inline";
-    Swal.fire({
-      title: `Ya tienes tres PokeBalls! <img class="ball-1" src="../img/1-pokeBall.png" alt="pokeball">`,
-      showDenyButton: true,
-      denyButtonColor: "#3FB950",
-      confirmButtonText: `Utilizar PokeBalls <img class="ball-1 buttonBall"
-      src="../img/1-pokeBall.png" alt="pokeball">`,
-      denyButtonText: `Comprar HonorBall <img class="ball-4 buttonBall"
-      src="../img/2-honorBall.png" alt="HonorBall">`,
-    }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {
-        pityPokeBall();
-      }
-      if (result.isDenied) {
-        swapBallToHonor();
-      }
-    });
+    swalDuplicadoPokeball();
   } else {
     ball1.classList.add("locked");
     ball2.classList.add("locked");
     ball3.classList.add("locked");
   }
+}
+
+export function swalDuplicadoPokeball() {
+  Swal.fire({
+    title: `Ya tienes tres PokeBalls! <img class="ball-1" src="../img/1-pokeBall.png" alt="pokeball">`,
+    showDenyButton: true,
+    denyButtonColor: "#3FB950",
+    confirmButtonText: `Utilizar PokeBalls <img class="ball-1 buttonBall"
+    src="../img/1-pokeBall.png" alt="pokeball">`,
+    denyButtonText: `Comprar HonorBall <img class="ball-4 buttonBall"
+    src="../img/2-honorBall.png" alt="HonorBall">`,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      pityPokeBall();
+    }
+    if (result.isDenied) {
+      swapBallToHonor();
+    }
+  });
 }
 
 function pityPokeBall() {
@@ -193,27 +193,30 @@ function sumaHonorBallPoints(n) {
     ball6.classList.remove("locked");
     useHonorball.style.display = "inline";
     buySuperball.style.display = "inline";
-    Swal.fire({
-      title: `Ya tienes tres HonorBalls! <img class="ball-4" src="../img/2-honorBall.png" alt="HonorBall">`,
-      showDenyButton: true,
-      denyButtonColor: "#3FB950",
-      confirmButtonText: `Utilizar HonorBalls <img class="ball-4 buttonBall"
-      src="../img/2-honorBall.png" alt="HonorBall">`,
-      denyButtonText: `Comprar SuperBall <img class="ball-7 buttonBall"
-      src="../img/3-superBall.png" alt="superball">`,
-    }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {
-        pityHonorBall();
-      } else if (result.isDenied) {
-        swapBallToSuper();
-      }
-    });
+    swalDuplicadoHonorball();
   } else {
     ball4.classList.add("locked");
     ball5.classList.add("locked");
     ball6.classList.add("locked");
   }
+}
+
+export function swalDuplicadoHonorball() {
+  Swal.fire({
+    title: `Ya tienes tres HonorBalls! <img class="ball-4" src="../img/2-honorBall.png" alt="HonorBall">`,
+    showDenyButton: true,
+    denyButtonColor: "#3FB950",
+    confirmButtonText: `Utilizar HonorBalls <img class="ball-4 buttonBall"
+    src="../img/2-honorBall.png" alt="HonorBall">`,
+    denyButtonText: `Comprar SuperBall <img class="ball-7 buttonBall"
+    src="../img/3-superBall.png" alt="superball">`,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      pityHonorBall();
+    } else if (result.isDenied) {
+      swapBallToSuper();
+    }
+  });
 }
 
 function pityHonorBall() {
@@ -236,7 +239,6 @@ function swapBallToSuper() {
 
 function sumaSuperBallPoints(n) {
   superBallPoints += n;
-  console.log("superball points: " + superBallPoints);
   guardarBallPoints();
   if (superBallPoints === 1) {
     ball7.classList.remove("locked");
@@ -249,26 +251,29 @@ function sumaSuperBallPoints(n) {
     ball9.classList.remove("locked");
     useSuperball.style.display = "inline";
     buyUltraball.style.display = "inline";
-    Swal.fire({
-      title: `Ya tienes tres SuperBalls! <img class="ball-1" src="../img/3-superBall.png" alt="SuperBall">`,
-      showDenyButton: true,
-      denyButtonColor: "#3FB950",
-      confirmButtonText: `Utilizar SuperBalls <img class="ball-1 buttonBall" src="../img/3-superBall.png" alt="SuperBall">`,
-      denyButtonText: `Comprar UltraBall <img class="ball-1 buttonBall"
-      src="../img/4-ultraBall.png" alt="ultraball">`,
-    }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {
-        pitySuperBall();
-      } else if (result.isDenied) {
-        swapBallToUltra();
-      }
-    });
+    swalDuplicadoSuperball();
   } else {
     ball7.classList.add("locked");
     ball8.classList.add("locked");
     ball9.classList.add("locked");
   }
+}
+
+export function swalDuplicadoSuperball() {
+  Swal.fire({
+    title: `Ya tienes tres SuperBalls! <img class="ball-1" src="../img/3-superBall.png" alt="SuperBall">`,
+    showDenyButton: true,
+    denyButtonColor: "#3FB950",
+    confirmButtonText: `Utilizar SuperBalls <img class="ball-1 buttonBall" src="../img/3-superBall.png" alt="SuperBall">`,
+    denyButtonText: `Comprar UltraBall <img class="ball-1 buttonBall"
+    src="../img/4-ultraBall.png" alt="ultraball">`,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      pitySuperBall();
+    } else if (result.isDenied) {
+      swapBallToUltra();
+    }
+  });
 }
 
 function pitySuperBall() {
@@ -303,26 +308,29 @@ function sumaUltraBallPoints(n) {
     ball12.classList.remove("locked");
     useUltraball.style.display = "inline";
     buyMasterball.style.display = "inline";
-    Swal.fire({
-      title: `Ya tienes tres UltraBalls! <img class="ball-1" src="../img/4-ultraBall.png" alt="UltraBall">`,
-      showDenyButton: true,
-      denyButtonColor: "#3FB950",
-      confirmButtonText: `Utilizar UltraBalls <img class="ball-1 buttonBall" src="../img/4-ultraBall.png" alt="ultraBall">`,
-      denyButtonText: `Comprar MasterBall <img class="ball-1 buttonBall"
-      src="../img/5-masterBall.png" alt="masterball">`,
-    }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {
-        pityUltraBall();
-      } else if (result.isDenied) {
-        swapBallToMaster();
-      }
-    });
+    swalDuplicadoUltraball();
   } else {
     ball10.classList.add("locked");
     ball11.classList.add("locked");
     ball12.classList.add("locked");
   }
+}
+
+export function swalDuplicadoUltraball() {
+  Swal.fire({
+    title: `Ya tienes tres UltraBalls! <img class="ball-1" src="../img/4-ultraBall.png" alt="UltraBall">`,
+    showDenyButton: true,
+    denyButtonColor: "#3FB950",
+    confirmButtonText: `Utilizar UltraBalls <img class="ball-1 buttonBall" src="../img/4-ultraBall.png" alt="ultraBall">`,
+    denyButtonText: `Comprar MasterBall <img class="ball-1 buttonBall"
+    src="../img/5-masterBall.png" alt="masterball">`,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      pityUltraBall();
+    } else if (result.isDenied) {
+      swapBallToMaster();
+    }
+  });
 }
 function pityUltraBall() {
   ball10.classList.add("locked");
@@ -356,26 +364,28 @@ function sumaMasterBallPoints(n) {
     ball15.classList.remove("locked");
     useMasterball.style.display = "inline";
     usePokerandom.style.display = "inline";
-    Swal.fire({
-      title: `Ya tienes tres MasterBalls! <img class="ball-1" src="../img/5-masterBall.png" alt="masterBall">`,
-      showDenyButton: true,
-      denyButtonColor: "#3FB950",
-      confirmButtonText: `Utilizar UltraBalls <img class="ball-1 buttonBall" src="../img/5-masterBall.png" alt="masterBall">`,
-      denyButtonText: `Selecciona un Pokemon manualmente <img class="ball-1 buttonBall"
-      src="../img/6-pokeRandom.png" alt="masterball">`,
-    }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {
-        pityMasterBall();
-      } else if (result.isDenied) {
-        seleccionarPokeManual();
-      }
-    });
+    swalDuplicadoMasterball();
   } else {
     ball13.classList.add("locked");
     ball14.classList.add("locked");
     ball15.classList.add("locked");
   }
+}
+export function swalDuplicadoMasterball() {
+  Swal.fire({
+    title: `Ya tienes tres MasterBalls! <img class="ball-1" src="../img/5-masterBall.png" alt="masterBall">`,
+    showDenyButton: true,
+    denyButtonColor: "#3FB950",
+    confirmButtonText: `Utilizar UltraBalls <img class="ball-1 buttonBall" src="../img/5-masterBall.png" alt="masterBall">`,
+    denyButtonText: `Selecciona un Pokemon manualmente <img class="ball-1 buttonBall"
+    src="../img/6-pokeRandom.png" alt="masterball">`,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      pityMasterBall();
+    } else if (result.isDenied) {
+      seleccionarPokeManual();
+    }
+  });
 }
 function pityMasterBall() {
   ball13.classList.add("locked");
