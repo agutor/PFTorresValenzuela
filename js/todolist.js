@@ -20,7 +20,24 @@ function actualizaContador() {
 function sumaPunto(n) {
   puntos += n;
   puntos = puntos <= 0 ? 0 : puntos;
+  puntosToast();
   actualizaContador();
+}
+
+function puntosToast() {
+  Toastify({
+    text: `Puntos Disponibles: ${puntos}`,
+    duration: 3000,
+    newWindow: true,
+    close: true,
+    gravity: "bottom",
+    position: "right",
+    style: {
+      background: "#3FB950",
+      color: "black",
+    },
+    stopOnFocus: true,
+  }).showToast();
 }
 
 // Check() se fija si hay contenido en el storage, ejecutando la funcion que solicita los datos del mismo
@@ -39,7 +56,6 @@ function check() {
   }
   if (getListaDeTareasCompletas != null) {
     listaDeTareasCompletas = getListaDeTareasCompletas;
-    recargaDOM();
   } else {
     listaDeTareasCompletas = [];
   }
@@ -51,7 +67,7 @@ function check() {
   }
 }
 
-// RecargaDOM() solicita los datos del storage y pone las tareas en sus respectivas categorias con la funcion newItem()
+// solicita los datos del storage y pone las tareas en sus respectivas categorias con la funcion newItem()
 function recargaDOM() {
   listaDeTareas.forEach((tarea) => {
     newItem(true, tarea, "on", listaTareas, true);
@@ -82,12 +98,16 @@ class tarea {
 // luego crea el item que va en el html con la funcion newItem()
 function agregarTarea(e) {
   e.preventDefault();
-  const newTarea = new tarea(inputTarea.value, selectorDificultad.value);
-  listaDeTareas.push(newTarea);
-  newItem(true, newTarea, "on", listaTareas, true);
-  inputTarea.focus();
-  btnAgregar.reset();
-  guardarEnLS();
+  if (listaDeTareas.length === 10) {
+    Swal.fire("No puedes tener mas de 10 tareas sin terminar!");
+  } else {
+    const newTarea = new tarea(inputTarea.value, selectorDificultad.value);
+    listaDeTareas.push(newTarea);
+    newItem(true, newTarea, "on", listaTareas, true);
+    inputTarea.focus();
+    btnAgregar.reset();
+    guardarEnLS();
+  }
 }
 
 // Funcion utilizada para determinar si la casilla de las tareas aparece marcada, o no, en el html
@@ -195,7 +215,7 @@ function newItem(checkCheck, objetoTarea, visibilidad, listaStorage, btn) {
   });
   addDeleteBtn(item, deleteBtn, btn);
   listaStorage.append(item);
-  onOffDeleteBtn(); //CAMBIAR NOMBRE DE ESTA FUNCION A ONOFFDELETEALLBTN
+  onOffDeleteBtn();
 }
 
 export { check };

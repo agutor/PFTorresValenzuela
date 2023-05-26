@@ -46,7 +46,10 @@ export let ultraBallPoints = 0;
 export let masterBallPoints = 0;
 
 let pokemonObtenidos = [];
+//esta hoja tiene codigo muy repetitivo que se puede acotar bastante, pero en el proceso de hacerlo me encontre con distintos problemas
+//en el dom y storage, y al tener el tiempo encima preferi avanzar. perdon por tanta repeticion.
 
+//guardado y solicitado de datos del storage
 function guardarBallPoints() {
   localStorage.setItem("pokeBallPoints", JSON.stringify(pokeBallPoints));
   localStorage.setItem("honorBallPoints", JSON.stringify(honorBallPoints));
@@ -111,6 +114,8 @@ function checkPuntos() {
     pokemonObtenidos = [];
   }
 }
+
+//determina que el pokemon obtenido con balls sea de la rareza de las balls
 function selectorPitySistem(rareza) {
   checkPuntos();
   let i = Math.floor(Math.random() * pokedexArray.length);
@@ -120,6 +125,7 @@ function selectorPitySistem(rareza) {
   selectPoke(i);
 }
 
+//sistema de puntos ball
 function sumaPokeBallPoints(n) {
   pokeBallPoints += n;
   guardarBallPoints();
@@ -142,6 +148,7 @@ function sumaPokeBallPoints(n) {
   }
 }
 
+//swal para duplicado y aviso de que ya se tienen 3 balls de una misma rareza
 export function swalDuplicadoPokeball() {
   Swal.fire({
     title: `Ya tienes tres PokeBalls! <img class="ball-1" src="../img/1-pokeBall.png" alt="pokeball">`,
@@ -161,6 +168,7 @@ export function swalDuplicadoPokeball() {
   });
 }
 
+//maneja la visual de las balls en el dom y los botones, reinicia puntos y lo manda al selector de rareza
 function pityPokeBall() {
   ball1.classList.add("locked");
   ball2.classList.add("locked");
@@ -172,6 +180,7 @@ function pityPokeBall() {
   selectorPitySistem(pokeNormales, normalObtenido);
 }
 
+//cambia 3 balls de una misma rareza por 1 ball de una rareza superior
 function swapBallToHonor() {
   sumaPokeBallPoints(-3);
   sumaHonorBallPoints(1);
@@ -398,6 +407,8 @@ function pityMasterBall() {
   selectorPitySistem(pokeMaster, masterObtenido);
 }
 
+//funcion para que el usuario tenga la opcion,aparte de poder obtener un pokemon de rareza master,
+// elegir a un pokemon de forma manual, con el numero
 async function seleccionarPokeManual() {
   const { value: poke } = await Swal.fire({
     title: "Selecciona el Pokemon que necesitas",

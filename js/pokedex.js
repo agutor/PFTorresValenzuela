@@ -49,7 +49,7 @@ export let honorObtenido = [];
 export let superObtenido = [];
 export let ultraObtenido = [];
 export let masterObtenido = [];
-export let shinyObtenido = [];
+export let shinyObtenido = 0;
 
 class pokemon {
   constructor(imagen, id, nombre) {
@@ -59,8 +59,69 @@ class pokemon {
   }
 }
 
+//contador de puntos
 let puntos = 0;
+let contador = document.createElement("h1");
+function actualizaContador() {
+  contador.innerText = "Puntos Disponibles: " + puntos;
+  contadorPuntos.append(contador);
+}
+// notificaciones toast que aparecen cuando obtienes un pokemon nuevo
+function notificacionesToast(i) {
+  if (pokeHonor.includes(i)) {
+    obtenidosToast();
+    obtenidosRarezaToast("Honor", honorObtenido, pokeHonor.length);
+  } else if (pokeSuper.includes(i)) {
+    obtenidosToast();
+    obtenidosRarezaToast("Super", superObtenido, pokeSuper.length);
+  } else if (pokeUltra.includes(i)) {
+    obtenidosToast();
+    obtenidosRarezaToast("Ultra", ultraObtenido, pokeUltra.length);
+  } else if (pokeMaster.includes(i)) {
+    obtenidosToast();
+    obtenidosRarezaToast("Master", masterObtenido, pokeMaster.length);
+  } else if (shinyObtenidoDom.includes(i)) {
+    obtenidosToast();
+    obtenidosRarezaToast("Shinys", honorObtenido, pokeHonor.length);
+  } else {
+    obtenidosToast();
+    obtenidosRarezaToast("Normales", normalObtenido, pokeNormales.length);
+  }
+}
 
+function obtenidosToast() {
+  Toastify({
+    text: `Pokemon obtenidos: ${pokemonObtenidos.length} / 151`,
+    duration: 3000,
+    newWindow: true,
+    close: true,
+    gravity: "bottom",
+    position: "right",
+    style: {
+      background: "#3FB950",
+      color: "black",
+    },
+    stopOnFocus: true,
+  }).showToast();
+}
+
+function obtenidosRarezaToast(rarezaNombre, rarezaCantidad, rarezaTotal) {
+  Toastify({
+    text: `Pokemon ${rarezaNombre} obtenidos: ${rarezaCantidad} / ${rarezaTotal}`,
+    duration: 3000,
+    newWindow: true,
+    close: true,
+    gravity: "bottom",
+    position: "right",
+    style: {
+      background: "#3FB950",
+      color: "black",
+    },
+    stopOnFocus: true,
+  }).showToast();
+}
+
+//solicita datos del storage
 function checkPokedex() {
   const getPuntos = JSON.parse(localStorage.getItem("puntos"));
   const getPokemonObtenidos = JSON.parse(
@@ -132,6 +193,7 @@ function checkPokedex() {
   }
 }
 
+//recarga de pokemon en el DOM
 function pokemonObtenidosDOM() {
   Swal.fire({
     title: "Cargando Pokedex!",
@@ -157,6 +219,7 @@ function pokemonObtenidosDOM() {
   });
 }
 
+// carga de shinys en el DOM
 function cargaShinysDOM() {
   const shinyRequest = [];
   if (shinyObtenidoDom) {
@@ -171,6 +234,8 @@ function cargaShinysDOM() {
     });
   }
 }
+
+//guarda datos en el storage
 function guardarPokedexEnLS() {
   localStorage.setItem("puntos", JSON.stringify(puntos));
   localStorage.setItem("pokemonObtenidos", JSON.stringify(pokemonObtenidos));
@@ -181,18 +246,16 @@ function guardarPokedexEnLS() {
   localStorage.setItem("masterObtenido", JSON.stringify(masterObtenido));
   localStorage.setItem("cantidadDeCompras", JSON.stringify(cantidadDeCompras));
   localStorage.setItem("shinyObtenidoDom", JSON.stringify(shinyObtenidoDom));
+  localStorage.setItem("shinyObtenido", JSON.stringify(shinyObtenido));
   actualizaContador();
 }
 
-let contador = document.createElement("h1");
-function actualizaContador() {
-  contador.innerText = "Puntos Disponibles: " + puntos;
-  contadorPuntos.append(contador);
-}
-
+//funcion para que el usuario obtenga un pokemon aleatorio
 function comprarBall() {
   cantidadDeCompras++;
   guardarPokedexEnLS();
+
+  //este if se fija si el usuario tiene la cantidad maxima de puntos ball posible
   if (
     pokeBallPoints === 3 ||
     honorBallPoints === 3 ||
@@ -201,6 +264,8 @@ function comprarBall() {
     masterBallPoints === 3
   ) {
     Swal.fire("Debes usar las Balls antes de continuar!");
+    //cantidad de compras es un contador que implemente para que cada 10 y 20 tiradas aumente la
+    //probabilidad de que salga un pokemon raro y evitar la monotonia de pokemon normales y honor
   } else if (cantidadDeCompras === 10 || cantidadDeCompras === 20) {
     let i = Math.floor(Math.random() * pokedexArray.length);
     if (pokeUltra.includes(i) || pokeMaster.includes(i)) {
@@ -217,6 +282,9 @@ function comprarBall() {
     } else {
       selectPoke(i);
     }
+    // cuando cantidad de compras llega a 30 la probabilidad de sacar un pokemon raro aumenta considerablemente
+    // ya que se suprime la posibilidad de que salga un pokemon normal y honor e iguala las posibilidades de que salga
+    // cualquier otro de rareza superior. luego de esta tirada cantidad de compras se iguala a 0 y vuelve a empezar
   } else if (cantidadDeCompras === 30) {
     let i = Math.floor(Math.random() * pokedexArray.length);
     while (i === 0 || pokeNormales.includes(i) || pokeHonor.includes(i)) {
@@ -226,8 +294,9 @@ function comprarBall() {
     cantidadDeCompras = 0;
     guardarPokedexEnLS();
   } else {
-    if (puntos >= 1) {
-      puntos -= 1;
+    //obtencion comun de pokemon
+    if (puntos >= 5) {
+      puntos -= 5;
       let i = Math.floor(Math.random() * pokedexArray.length);
       while (i === 0) {
         i = Math.floor(Math.random() * pokedexArray.length);
@@ -279,11 +348,14 @@ function comprarBall() {
     }
   }
 }
-
+//borra las tareas completas de la todolist al momento de obtener un pokemon
+//de esta manera se evita que el usuario ponga tareas ya realizadas como "por completar"
+//y gane mas puntos re-completandolas
 function borrarTareasCompletas() {
   localStorage.removeItem("listaDeTareasCompletas");
 }
 
+//en esta parte se selecciona el pokemon que obtiene el usuario
 export function selectPoke(i) {
   borrarTareasCompletas();
   Swal.fire({
@@ -298,12 +370,15 @@ export function selectPoke(i) {
       clearInterval();
     },
   }).then(() => {
+    //aca se determina si el pokemon es un duplicado de los que ya tiene el usuario y tambien se da la pequeña posibilidad
+    // de que el pokemon duplicado sea shiny
     if (pokemonObtenidos.includes(i)) {
       let shiny = Math.floor(Math.random() * 100) + 1;
       if (shiny === 81) {
         console.log("shiny obtenidos array: " + shinyObtenidoDom);
         limpiezaDOMArray(i);
         guardarPokedexEnLS();
+        notificacionesToast(i);
       } else {
         if (pokeHonor.includes(i)) {
           sumaHonorBallPoints(1);
@@ -330,10 +405,12 @@ export function selectPoke(i) {
     } else {
       guardarPokedexEnLS();
       limpiezaDOMArray(i);
+      notificacionesToast(i);
     }
   });
 }
 
+//aca estan los swal utilizados en cada caso, si es un pokemon nuevo, repetido o shiny
 function swalRareza(i, rareza) {
   guardarPokedexEnLS();
   fetch(URL + i)
@@ -395,6 +472,7 @@ function swalDuplicado(i, rareza) {
     });
 }
 
+//aca se determina la rareza del pokemon y se comienza el proceso de insercion en el dom
 function limpiezaDOMArray(i) {
   if (pokemonObtenidos.includes(i)) {
     shinyObtenido++;
@@ -452,7 +530,7 @@ function limpiezaDOMArray(i) {
     }
   }
 }
-
+//se borra la pokeball vacia y hace el fetch para comenzar con la parte del html y el manejo de los datos
 function limpiarPokes(i) {
   const limpiarPoke = document.querySelector(`.poke-${i}`);
   limpiarPoke.remove();
@@ -461,6 +539,7 @@ function limpiarPokes(i) {
     .then((data) => newPoke(data));
 }
 
+//se utilizan los datos de la pokeapi para armar el div que se inserta en el html
 function newPoke(poke) {
   let pokeId = poke.id.toString();
   if (pokeId.length === 1) {
@@ -545,8 +624,8 @@ function newShiny(poke) {
   }
 }
 
+//se crean los div con pokeballs vacios para la pokedex y el array que determina la cantidad total de pokemon
 let kantonians = "";
-
 for (let i = 0; i <= 151; i++) {
   let poke = new pokemon(
     "https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg",
@@ -571,6 +650,7 @@ for (let i = 0; i <= 151; i++) {
 }
 kantoPokedex.innerHTML = kantonians;
 
+//botones para filtrar los pokemon obtenidos y no obtenidos
 document.addEventListener("DOMContentLoaded", function () {
   let obtenidos = localStorage.getItem("off");
   const balled = document.querySelectorAll(".balled");

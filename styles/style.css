@@ -249,10 +249,6 @@ p {
   border-color: #b9b262 !important;
 }
 
-.locked {
-  filter: grayscale(80%);
-}
-
 .ball {
   display: block;
 }
