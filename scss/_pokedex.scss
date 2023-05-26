@@ -122,6 +122,9 @@ p {
     border-color: $colorAcento !important;
 }
 
+.locked {
+    filter: grayscale(80%)
+}
 
 
 
