@@ -1,15 +1,43 @@
-# PreEntrega 3 Agustin Matias Torres Valenzuela
+# Proyecto Final Agustin Matias Torres Valenzuela
 
 Curso de Javascript comision 39505
 
-## Lista de tareas diarias (to-do list)
+## Completa tu Pokedex llevando a cabo tus tareas de todos los dias!
 
-Aplicación para organizar tareas diarias.
+Descubre una experiencia única con nuestra todo list y Pokedex integrada. ¡Completa tareas y atrapa Pokémon mientras organizas tu vida!
 
-Este simulador le permite al usuario:
+Convierte tus tareas en emocionantes retos Pokémon. Gana puntos y canjéalos por Pokeballs para atrapar a los primeros 151 Pokémon.
 
-Ingresar tareas y su dificultad
+![Image Alt Text](./img/readME4.jpg)
 
-Marcarlas como completadas, borrar las mismas de manera individual o de manera grupal al terminarlas.
+
+¿Estás listo para convertirte en el mejor maestro Pokémon? Organiza tus tareas y gana puntos para obtener las Pokeballs necesarias.
+
+![Image Alt Text](./img/readME8.jpg)
+
+¡Canjea tus puntos por Pokeballs y aumenta tu colección!
+
+
+
+Consigue Pokémon raros y épicos al completar tus tareas con nuestra todo list. ¡Demuestra tu habilidad como entrenador!
+
+![Image Alt Text](./img/readME2.jpg)
+
+No te preocupes por Pokémon repetidos. Conviértelos en Pokeballs y obtén nuevas oportunidades para atrapar Pokémon de mayor rareza. (rarezas representadas con Balls. De arriba hacia abajo: Normal, Honor. Super, Ultra, Master)
+
+
+![Image Alt Text](./img/readME7.jpg)
+
+
+¿Tienes suficientes Pokeballs? Canjea tus duplicados por Pokémon de la misma rareza o por una pokeball de rareza superior
+
+
+![Image Alt Text](./img/readME5.jpg)
+
+¡La emoción de encontrar Pokémon shiny está a solo un paso! Completa tus tareas, junta Pokeballs, prueba tu suerte e intenta obtener un Pokémon variocolor.
+
 
 ![Image Alt Text](./img/readME9.jpg)
+
+Experimenta la combinación perfecta entre organización y diversión con nuestra todo list. Atrapa Pokémon, completa tareas y alcanza tus metas en un solo lugar.
+
