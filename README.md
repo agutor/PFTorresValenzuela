@@ -1,4 +1,5 @@
 # PreEntrega 3 Agustin Matias Torres Valenzuela
+
 Curso de Javascript comision 39505
 
 ## Lista de tareas diarias (to-do list)
@@ -11,4 +12,4 @@ Ingresar tareas y su dificultad
 
 Marcarlas como completadas, borrar las mismas de manera individual o de manera grupal al terminarlas.
 
-
+![Image Alt Text](./img/readME9.jpg)
